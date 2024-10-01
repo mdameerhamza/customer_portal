@@ -1,0 +1,99 @@
+
+### Deleting old self-signed certificate for infusion.network ...
+
+### Creating self-signed certificate for infusion.network ...
+
+[32mLoading composer repositories with package information[39m
+[32mInstalling dependencies (including require-dev) from lock file[39m
+Nothing to install or update
+[30;43mPackage phpunit/phpunit-mock-objects is abandoned, you should avoid using it. No replacement was suggested.[39;49m
+[32mGenerating autoload files[39m
+> Illuminate\Foundation\ComposerScripts::postAutoloadDump
+> @php artisan package:discover
+Discovered Package: fideloper/proxy
+Discovered Package: laravel/tinker
+Discovered Package: laravelcollective/html
+Discovered Package: mariuzzo/laravel-js-localization
+Discovered Package: nesbot/carbon
+Package manifest generated successfully.
+> Illuminate\Foundation\ComposerScripts::postInstall
+Step 1/19 : FROM phusion/baseimage:0.11 as base
+ ---> 14e6c478b00a
+Step 2/19 : ENV LC_ALL C.UTF-8
+ ---> Using cache
+ ---> 167cb1594954
+Step 3/19 : RUN add-apt-repository ppa:ondrej/php  && add-apt-repository ppa:ondrej/nginx-mainline  && install_clean       gettext       nginx       php7.3-fpm       php7.3-bcmath       php7.3-curl       php7.3-gmp       php7.3-mbstring       php7.3-sqlite3       php7.3-zip       unzip
+ ---> Using cache
+ ---> 6e4e07599df0
+Step 4/19 : WORKDIR /var/www/html
+ ---> Using cache
+ ---> 9594aa29ed5d
+Step 5/19 : COPY --chown=www-data --from=composer:1.8.4 /usr/bin/composer /tmp/composer
+ ---> Using cache
+ ---> 7cf213321913
+Step 6/19 : COPY composer.json composer.lock ./
+ ---> Using cache
+ ---> ffd76b5470e6
+Step 7/19 : RUN mkdir -p vendor  && chown www-data:www-data vendor  && COMPOSER_CACHE_DIR=/dev/null setuser www-data /tmp/composer install --no-dev --no-interaction --no-scripts --no-autoloader
+ ---> Using cache
+ ---> d3c16ea771ec
+Step 8/19 : COPY --chown=www-data . .
+ ---> Using cache
+ ---> 5f0f17374a46
+Step 9/19 : RUN COMPOSER_CACHE_DIR=/dev/null setuser www-data /tmp/composer install --no-dev --no-interaction --no-scripts --classmap-authoritative  && rm -rf /tmp/composer
+ ---> Using cache
+ ---> 00cf0ab82683
+Step 10/19 : COPY deploy/conf/php-fpm/ /etc/php/7.3/fpm/
+ ---> Using cache
+ ---> 40ae7ff82a54
+Step 11/19 : COPY deploy/conf/cron.d/* /etc/cron.d/
+ ---> Using cache
+ ---> ebad7e7ae188
+Step 12/19 : RUN mkdir -p /etc/my_init.d
+ ---> Using cache
+ ---> 1730ea516f50
+Step 13/19 : COPY deploy/*.sh /etc/my_init.d/
+ ---> Using cache
+ ---> 2ab30f29df2a
+Step 14/19 : RUN mkdir /etc/service/php-fpm
+ ---> Using cache
+ ---> 4ffb5c16c5f2
+Step 15/19 : COPY deploy/services/php-fpm.sh /etc/service/php-fpm/run
+ ---> Using cache
+ ---> beeb0d93e764
+Step 16/19 : RUN mkdir /etc/service/nginx
+ ---> Using cache
+ ---> ada72bdf8a2a
+Step 17/19 : COPY deploy/services/nginx.sh /etc/service/nginx/run
+ ---> Using cache
+ ---> 0bf2c73dfe7b
+Step 18/19 : VOLUME ['/var/www/html/storage']
+ ---> Using cache
+ ---> 0da0fa1d33ed
+Step 19/19 : EXPOSE 80 443
+ ---> Using cache
+ ---> 251cc25c8128
+
+Successfully built 251cc25c8128
+Successfully tagged customer_portal_app:latest
+### The app key is: base64:bBnfIfWzQNHWiUh8cStflT52LYBBgIO7v40Kt/AB56k=
+### Back this up somewhere in case you need it.
+Migration table created successfully.
+Migrating: 2016_05_18_161648_create_creation_tokens_table
+Migrated:  2016_05_18_161648_create_creation_tokens_table
+Migrating: 2016_05_18_184241_create_password_resets_table
+Migrated:  2016_05_18_184241_create_password_resets_table
+Migrating: 2016_06_01_165839_create_paypal_temporary_tokens_table
+Migrated:  2016_06_01_165839_create_paypal_temporary_tokens_table
+Migrating: 2017_07_19_152029_create_username_languages_table
+Migrated:  2017_07_19_152029_create_username_languages_table
+Migrating: 2018_03_22_181912_create_gocardless_tokens_table
+Migrated:  2018_03_22_181912_create_gocardless_tokens_table
+Migrating: 2019_02_25_174424_create_system_settings_table
+Migrated:  2019_02_25_174424_create_system_settings_table
+Cache cleared successfully.
+Compiled views cleared!
+Configuration cache cleared!
+Configuration cached successfully!
+Settings key is 7IgF5dNw1WW7QczLPBz1iSnroAlcDaWx
+### Navigate to https://infusion.network/settings and use the above settings key configure your portal.

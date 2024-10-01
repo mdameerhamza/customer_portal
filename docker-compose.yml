@@ -1,0 +1,40 @@
+version: '3.6'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sonar-customerportal
+    restart: always
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/conf/nginx/sonar-customerportal.template:/etc/nginx/conf.d/sonar-customerportal.template
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - ./public/assets/img/logo.png:/var/www/html/public/assets/img/logo.png
+      - ./public/assets/img/cover.png:/var/www/html/public/assets/img/cover.png
+      - storage:/var/www/html/storage
+    env_file:
+     - .env
+    environment:
+      REDIS_HOST: redis
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:5.0.4-alpine 
+    restart: always
+
+  watchtower:
+    image: v2tec/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: sonar-customerportal
+
+volumes:
+  storage:
+    driver: local
